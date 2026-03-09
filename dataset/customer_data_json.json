@@ -1,0 +1,37 @@
+{
+	"name": "customer_data_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_sargcs1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "customer_data.json",
+				"folderPath": "customer_data",
+				"fileSystem": "source1"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"CustID": {
+					"type": "string"
+				},
+				"Name": {
+					"type": "string"
+				},
+				"Status": {
+					"type": "string"
+				},
+				"SignupDate": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

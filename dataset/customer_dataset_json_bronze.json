@@ -1,0 +1,21 @@
+{
+	"name": "customer_dataset_json_bronze",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_sargcs1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "customer",
+				"folderPath": "Bronze",
+				"fileSystem": "source2"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

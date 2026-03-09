@@ -1,0 +1,22 @@
+{
+	"name": "DS_Silver_customer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS_sargcs1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "customer",
+				"folderPath": "silver",
+				"fileSystem": "datalake"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
