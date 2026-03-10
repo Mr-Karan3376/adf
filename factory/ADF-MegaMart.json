@@ -1,0 +1,9 @@
+{
+	"name": "ADF-MegaMart",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7a852eaa-d6d3-42ef-b84b-7b9c0342e345",
+		"tenantId": "09c35819-2a89-4305-87b0-7b6721a827be"
+	}
+}
