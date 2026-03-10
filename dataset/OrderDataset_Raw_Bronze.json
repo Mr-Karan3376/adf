@@ -1,0 +1,22 @@
+{
+	"name": "OrderDataset_Raw_Bronze",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "raw_order_data.parquet",
+				"folderPath": "Bronze",
+				"fileSystem": "sourcedatasets"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

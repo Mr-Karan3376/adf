@@ -1,0 +1,9 @@
+{
+	"name": "ADF-Megamart-123",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2676661d-6f91-4ee7-9d4c-f6c95e98074d",
+		"tenantId": "dc54ccc1-fbac-40d4-9b1a-72f126d88864"
+	}
+}

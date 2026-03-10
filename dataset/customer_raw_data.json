@@ -1,0 +1,22 @@
+{
+	"name": "customer_raw_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "customer_rawdataset.parquet",
+				"folderPath": "Bronze",
+				"fileSystem": "sourcedatasets"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

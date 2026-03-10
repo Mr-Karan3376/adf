@@ -1,0 +1,22 @@
+{
+	"name": "DS_Bronze_RawOrders",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "raworders.parquet",
+				"folderPath": "bronze",
+				"fileSystem": "landing"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
