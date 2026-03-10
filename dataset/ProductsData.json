@@ -1,0 +1,45 @@
+{
+	"name": "ProductsData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_Database_RGCS2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "OrderId",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PRODUCTS",
+				"type": "varchar"
+			},
+			{
+				"name": "Quantity",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PRICE",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Product_Category",
+				"type": "varchar"
+			},
+			{
+				"name": "ORDER_DATE",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Products"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
