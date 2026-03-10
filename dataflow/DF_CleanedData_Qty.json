@@ -1,0 +1,57 @@
+{
+	"name": "DF_CleanedData_Qty",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLS_Megamart",
+						"type": "DatasetReference"
+					},
+					"name": "CleanedData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CleanedDailySales",
+						"type": "DatasetReference"
+					},
+					"name": "CleanedDatatoSilver",
+					"description": "CleanedDatatoSilver"
+				}
+			],
+			"transformations": [
+				{
+					"name": "RemoveBadQuantity",
+					"description": "Removing Bad data from Quantity"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderID as string,",
+				"          CustomerName as string,",
+				"          Product_Category as string,",
+				"          Qty as string,",
+				"          Price_String as string,",
+				"          Order_Date as string,",
+				"          Shipping_JSON as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> CleanedData",
+				"CleanedData filter(toInteger(Qty)>0) ~> RemoveBadQuantity",
+				"RemoveBadQuantity sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> CleanedDatatoSilver"
+			]
+		}
+	}
+}
