@@ -1,0 +1,90 @@
+{
+	"name": "DF_CleanedData_OrderID",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLS_Megamart",
+						"type": "DatasetReference"
+					},
+					"name": "CleanedData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_CleanedDailySales",
+						"type": "DatasetReference"
+					},
+					"name": "SilverCleanedSalesData"
+				}
+			],
+			"transformations": [
+				{
+					"name": "RemoveBadOrderID",
+					"description": "Removing Bad data from OrderID"
+				},
+				{
+					"name": "DerivedCleanedData"
+				},
+				{
+					"name": "UpsetPolicy"
+				},
+				{
+					"name": "RenameReorder"
+				},
+				{
+					"name": "RemoveDuplicateRows"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderID as string,",
+				"          CustomerName as string,",
+				"          Product_Category as string,",
+				"          Qty as string,",
+				"          Price_String as string,",
+				"          Order_Date as string,",
+				"          Shipping_JSON as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> CleanedData",
+				"RemoveDuplicateRows filter(toInteger(Quantity)>0) ~> RemoveBadOrderID",
+				"RemoveBadOrderID derive(CustomerName = initCap(CustomerName),",
+				"          Product_Category = upper(iifNull(Product_Category,'UNKNOWN')),",
+				"          Price_String = toDecimal(replace(Price,'$',''))) ~> DerivedCleanedData",
+				"DerivedCleanedData alterRow(upsertIf(true())) ~> UpsetPolicy",
+				"CleanedData select(mapColumn(",
+				"          OrderID,",
+				"          Order_Date,",
+				"          CustomerName,",
+				"          Product_Category,",
+				"          Quantity = Qty,",
+				"          Price = Price_String,",
+				"          Shipping_JSON",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> RenameReorder",
+				"RenameReorder aggregate(groupBy(OrderID),",
+				"     Order_Date = first(Order_Date,true()),",
+				"          Quantity = last(Quantity),",
+				"          Product_Category = last(Product_Category),",
+				"          Price = last(Price),",
+				"          CustomerName = first(CustomerName),",
+				"          Shipping_JSON = first(Shipping_JSON)) ~> RemoveDuplicateRows",
+				"UpsetPolicy sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SilverCleanedSalesData"
+			]
+		}
+	}
+}

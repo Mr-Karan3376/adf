@@ -1,0 +1,18 @@
+{
+	"name": "LSSQL",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"description": "This is the Linked Service for my SQL Database",
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "sqlserver-cs1.database.windows.net",
+			"database": "CS1-SQLDATABASE",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "megaadmin",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQEM2NzM2MDA2LUVDOTAtNDIzQi04M0NDLUVFOUI3MjI1MUYyNl83MTUwNDkxNi0xNmU2LTRiZjItYTI0Ny0zN2FhNzE4Y2YyYTQiDQp9"
+		}
+	}
+}

@@ -1,0 +1,57 @@
+{
+	"name": "DF_Clean_Daily_sales",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLS_RAW_DATA",
+						"type": "DatasetReference"
+					},
+					"name": "SourceRawparquet"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_Adls_Processset",
+						"type": "DatasetReference"
+					},
+					"name": "SinkProcess"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FilteZeroQuantity"
+				},
+				{
+					"name": "AddHighValueFlag"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          TransactionID as integer,",
+				"          ProductName as string,",
+				"          Quantity as integer,",
+				"          Amount as decimal(10,2),",
+				"          TransactionDate as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> SourceRawparquet",
+				"SourceRawparquet filter(Quantity>0) ~> FilteZeroQuantity",
+				"FilteZeroQuantity derive(IsHighValue = iif(Amount>50,'Yes','No')) ~> AddHighValueFlag",
+				"AddHighValueFlag sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SinkProcess"
+			]
+		}
+	}
+}

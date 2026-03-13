@@ -1,0 +1,20 @@
+{
+	"name": "DS_Bronze_OrdersData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "orders_Raw.json",
+				"fileSystem": "sourcedatasets"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

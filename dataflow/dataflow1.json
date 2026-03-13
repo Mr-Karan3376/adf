@@ -1,0 +1,73 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Bronze_RawOrders",
+						"type": "DatasetReference"
+					},
+					"name": "DFBronzeSourceData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_ADLS_Silver",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "FilterBadRecords"
+				},
+				{
+					"name": "DerivedCleanedData"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "parse1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          OrderID as string,",
+				"          CustomerName as string,",
+				"          Product_Category as string,",
+				"          Qty as string,",
+				"          Price_String as string,",
+				"          Order_Date as string,",
+				"          Shipping_JSON as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> DFBronzeSourceData",
+				"DFBronzeSourceData filter(!isNull(Qty) && toInteger(Qty) >0) ~> FilterBadRecords",
+				"FilterBadRecords derive(CustomerName = initCap(CustomerName),",
+				"          Product_Category = upper(iifNull(Product_Category, 'UKNOWN')),",
+				"          Qty = toInteger(Qty),",
+				"          Price_String = toDecimal(replace(Price_String,'$',''))) ~> DerivedCleanedData",
+				"DerivedCleanedData alterRow(upsertIf(true())) ~> alterRow1",
+				"alterRow1 parse(Shipping_JSON = Shipping_JSON ? (city as string,",
+				"          zip as string),",
+				"     format: 'json',",
+				"     documentForm: 'singleDocument') ~> parse1",
+				"parse1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

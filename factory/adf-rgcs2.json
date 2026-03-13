@@ -1,0 +1,9 @@
+{
+	"name": "adf-rgcs2",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1e8117cd-647e-44c0-874f-2cb19802fc05",
+		"tenantId": "3f8587c5-f75d-493f-a5ed-6cdc2d53eb83"
+	}
+}

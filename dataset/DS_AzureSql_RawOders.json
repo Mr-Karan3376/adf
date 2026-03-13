@@ -1,0 +1,46 @@
+{
+	"name": "DS_AzureSql_RawOders",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "OrderID",
+				"type": "varchar"
+			},
+			{
+				"name": "CustomerName",
+				"type": "varchar"
+			},
+			{
+				"name": "Product_Category",
+				"type": "varchar"
+			},
+			{
+				"name": "Qty",
+				"type": "varchar"
+			},
+			{
+				"name": "Price_String",
+				"type": "varchar"
+			},
+			{
+				"name": "Order_Date",
+				"type": "varchar"
+			},
+			{
+				"name": "Shipping_JSON",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "RawOrders"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

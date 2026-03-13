@@ -1,0 +1,7 @@
+{
+	"name": "SHIR-MyLaptop",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "To connect to my machine"
+	}
+}
