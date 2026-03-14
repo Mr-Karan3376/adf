@@ -17,6 +17,16 @@
 				"typeProperties": {
 					"source": {
 						"type": "DelimitedTextSource",
+						"additionalColumns": [
+							{
+								"name": "LoadDate",
+								"value": "@utcNow()"
+							},
+							{
+								"name": "SourceSystem",
+								"value": "'CRM;"
+							}
+						],
 						"storeSettings": {
 							"type": "AzureBlobFSReadSettings",
 							"recursive": true,
