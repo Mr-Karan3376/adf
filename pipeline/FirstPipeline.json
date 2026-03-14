@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "SalesData",
+				"name": "Copy_Sales_file",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -36,6 +36,20 @@
 						}
 					},
 					"enableStaging": false,
+					"logSettings": {
+						"enableCopyActivityLog": true,
+						"copyActivityLogSettings": {
+							"logLevel": "Info",
+							"enableReliableLogging": false
+						},
+						"logLocationSettings": {
+							"linkedServiceName": {
+								"referenceName": "LS_AzureADLS",
+								"type": "LinkedServiceReference"
+							},
+							"path": "salescustomer"
+						}
+					},
 					"translator": {
 						"type": "TabularTranslator",
 						"typeConversion": true,
